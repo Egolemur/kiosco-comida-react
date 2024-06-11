@@ -1,10 +1,12 @@
-import {productos} from '../data/productos'
+import {productos as data} from '../data/productos'
 import Producto from '../Components/Producto'
 import useQuiosco from '../hooks/useQiosco'
 
 export default function Inicio() {
   
   const {categoriaActual} = useQuiosco(); /* Este es el contexto del quiosco */
+
+  const productos = data.filter(producto => producto.categoria_id === categoriaActual.id) // Aquí estamos filtrando los productos seleccionados con la categoria del menu izquierdo
 
   return (
     <>
@@ -16,8 +18,7 @@ export default function Inicio() {
       </p>
       
       <div className='grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
-        {productos
-          .filter(producto => producto.categoria_id === categoriaActual.id)
+        {productos          
           .map(producto => (
           <Producto
             key={producto.id}
