@@ -2,14 +2,13 @@ import useQuiosco from '../hooks/useQiosco'
 
 export default function Categoria({categoria}) {
     const {icono, nombre, id} = categoria;    
-    const { handleClickCategoria, categoriaActual, setCategoriaActual} = useQuiosco(); /* Este es el contexto del quiosco */
+    const { handleClickCategoria, categoriaActual} = useQuiosco(); /* Este es el contexto del quiosco */
     const resaltarCategoria = () => categoriaActual.id === id ? "bg-amber-400" : ""; // Esta función resalta en amarillo la categoria seleccionada
 
     return (
         <button            
         type='button'
-        onClick={() => handleClickCategoria(id)} // Toma el ID de cada categoria individual 
-        // onClick={() => setCategoriaActual(categoria)}
+        onClick={() => handleClickCategoria(id)} // Toma el ID de cada categoria individual         
         className={`${resaltarCategoria()} flex items-center gap-4 border w-full p-3 hover:bg-amber-400 cursor-pointer`}>
             <img 
                 src={`/img/icono_${icono}.svg`} 
