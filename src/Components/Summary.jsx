@@ -16,8 +16,7 @@ export default function Summary() {
           <p className="text-center text-2xl">No hay elementos en tu pedido</p>
         ):(          
           <ul>
-            {pedido.map(pedido => {
-              console.log(pedido);
+            {pedido.map(pedido => {              
               return(
                 <Pedido
                   key={pedido.id}
