@@ -44,6 +44,12 @@ const QuioscoProvider = ({children}) => {
         }
     }
 
+    // Este Código servirá para eliminar un producto del pedido.
+    const handleEliminarPedido = (id) => {
+        const pedidoActualizado = pedido.filter(pedidoState => pedidoState.id!== id);
+        setPedido(pedidoActualizado);
+    }
+
     return (
         <QuioscoContext.Provider 
             value={{ 
@@ -58,7 +64,8 @@ const QuioscoProvider = ({children}) => {
                 handleSetProducto,
                 pedido,
                 handleAddPedido,
-                handleActualizarPedido
+                handleActualizarPedido,
+                handleEliminarPedido
             }} 
         > {children} </QuioscoContext.Provider>
     );
