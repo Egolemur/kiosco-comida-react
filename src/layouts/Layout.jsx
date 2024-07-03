@@ -19,7 +19,7 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default function Layout() {
-  const {modal, handleClickModal, producto} = useQuiosco();  
+  const {modal, handleClickModal} = useQuiosco();  
 
   return (
     <>

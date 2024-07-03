@@ -1,10 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useQuiosco from "../hooks/useQiosco"
 import { formatearDinero } from "../helpers";
 
 export default function ModalProducto() {
-  const [cantidad, setCantidad] = useState(1);
-  const {producto, handleClickModal} = useQuiosco();
+    const {producto, handleClickModal, handleAddPedido, pedido, handleActualizarPedido} = useQuiosco();
+    const [cantidad, setCantidad] = useState(1);
+    const [edicion, setEdicion] = useState(false);
+
+  useEffect( () => {
+    // Busca si el producto está en el pedido y si es así, setea la cantidad del producto en el modal.
+    if (pedido.some(pedido => pedido.id === producto.id)) {
+            const productoEdicion = pedido.filter(pedidoState => pedidoState.id === producto.id)[0]
+            setCantidad(productoEdicion.cantidad);        
+            setEdicion(true);
+        }
+    }, [pedido])
 
   
   return (
@@ -67,9 +77,13 @@ export default function ModalProducto() {
 
             <button
                 type="button"
-                className="bg-indigo-600 hover:bg-indigo-800 px-5 py-2 mt-5 text-white font-bold uppercase rounded"
+                className={`${edicion ? "bg-lime-500 hover:bg-lime-600" : "bg-indigo-600 hover:bg-indigo-800"} px-5 py-2 mt-5 text-white font-bold uppercase rounded`}
+                onClick={() => {
+                    edicion ? handleActualizarPedido({...producto, cantidad}) : handleAddPedido({...producto, cantidad});
+                    handleClickModal();
+                }}
             >
-                Añadir al pedido
+                {edicion ? "Editar al pedido" : "Agregar al pedido"}
             </button>
         </div>
     </div>

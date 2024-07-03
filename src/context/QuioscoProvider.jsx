@@ -8,6 +8,7 @@ const QuioscoProvider = ({children}) => {
     const [ categoriaActual, setCategoriaActual ] = useState(categorias[0]);
     const [producto, setProducto] = useState({});
     const [modal, setModal] = useState(false);
+    const [pedido, setPedido] = useState([]);
     
     // filtra los productos por categorias.
     const handleClickCategoria = (id) => {        
@@ -24,6 +25,25 @@ const QuioscoProvider = ({children}) => {
         setProducto(producto)
     }
 
+    const handleAddPedido = ({categoria_id, imagen, ...producto}) => {
+        setPedido([...pedido, {...producto}]);
+    };
+        
+    // ESTE CODIGO SIRVE OPARA ACTUALIZAR EL PEDIDO.
+    const handleActualizarPedido = (producto) => {
+        const productoActualizado = { ...producto };
+
+        if (pedido.some(pedido => pedido.id === productoActualizado.id)) {
+            const pedidoActualizado = pedido.map(pedidoState =>
+                pedidoState.id === productoActualizado.id ? productoActualizado : pedidoState
+            );
+            setPedido(pedidoActualizado);
+            console.log(pedidoActualizado);
+        } else {
+            setPedido([...pedido, productoActualizado]);
+        }
+    }
+
     return (
         <QuioscoContext.Provider 
             value={{ 
@@ -35,7 +55,10 @@ const QuioscoProvider = ({children}) => {
                 modal,
                 handleClickModal,
                 producto,
-                handleSetProducto
+                handleSetProducto,
+                pedido,
+                handleAddPedido,
+                handleActualizarPedido
             }} 
         > {children} </QuioscoContext.Provider>
     );
