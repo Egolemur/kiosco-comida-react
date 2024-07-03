@@ -27,7 +27,7 @@ const QuioscoProvider = ({children}) => {
     }
 
     // ESTE CODIGO SIRVE PARA AGREGAR PRODUCTOS AL PEDIDO.
-    const handleAddPedido = ({categoria_id, imagen, ...producto}) => {
+    const handleAddPedido = ({categoria_id, ...producto}) => {
         setPedido([...pedido, {...producto}]);
         toast.success('Producto agregado al pedido');
     };

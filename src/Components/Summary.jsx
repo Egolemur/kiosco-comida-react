@@ -5,7 +5,7 @@ export default function Summary() {
   const {pedido} = useQuiosco();
 
   return (
-    <aside className="md:w-72 h-screen overflow-y-scroll p-5">
+    <aside className="h-screen overflow-y-scroll p-5">
       <h1 className="text-4xl font-black">Mi pedido</h1>
       <p className="text-lg my-5">
         A continuación verás el resumen de tu pedido.
@@ -17,12 +17,13 @@ export default function Summary() {
         ):(          
           <ul>
             {pedido.map(pedido => {
+              console.log(pedido);
               return(
                 <Pedido
                   key={pedido.id}
                   pedido={pedido}
                 />
-              )
+              );              
             })}
           </ul>
         )}
