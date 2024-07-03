@@ -1,4 +1,5 @@
 import { createContext, useState } from 'react'
+import { toast } from 'react-toastify';
 import { categorias as categoriasDB } from "../data/categorias"
 
 const QuioscoContext = createContext();
@@ -25,8 +26,10 @@ const QuioscoProvider = ({children}) => {
         setProducto(producto)
     }
 
+    // ESTE CODIGO SIRVE PARA AGREGAR PRODUCTOS AL PEDIDO.
     const handleAddPedido = ({categoria_id, imagen, ...producto}) => {
         setPedido([...pedido, {...producto}]);
+        toast.success('Producto agregado al pedido');
     };
         
     // ESTE CODIGO SIRVE OPARA ACTUALIZAR EL PEDIDO.
@@ -39,6 +42,7 @@ const QuioscoProvider = ({children}) => {
             );
             setPedido(pedidoActualizado);
             console.log(pedidoActualizado);
+            toast.success('Producto actualizado en el pedido');
         } else {
             setPedido([...pedido, productoActualizado]);
         }
@@ -48,6 +52,7 @@ const QuioscoProvider = ({children}) => {
     const handleEliminarPedido = (id) => {
         const pedidoActualizado = pedido.filter(pedidoState => pedidoState.id!== id);
         setPedido(pedidoActualizado);
+        toast.success('Producto eliminado del pedido');
     }
 
     return (
