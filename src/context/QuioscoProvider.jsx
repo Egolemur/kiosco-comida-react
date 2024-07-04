@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react'
+import { createContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
 import { categorias as categoriasDB } from "../data/categorias"
 
@@ -10,6 +10,11 @@ const QuioscoProvider = ({children}) => {
     const [producto, setProducto] = useState({});
     const [modal, setModal] = useState(false);
     const [pedido, setPedido] = useState([]);
+    const [total, setTotal] = useState(0);
+    useEffect(() => {
+        const totalPedido = pedido.reduce((acumulador, pedido) => acumulador + (pedido.precio * pedido.cantidad), 0);
+        setTotal(totalPedido);
+    }, [pedido]);
     
     // filtra los productos por categorias.
     const handleClickCategoria = (id) => {        
@@ -70,7 +75,9 @@ const QuioscoProvider = ({children}) => {
                 pedido,
                 handleAddPedido,
                 handleActualizarPedido,
-                handleEliminarPedido
+                handleEliminarPedido,
+                total, 
+                setTotal                
             }} 
         > {children} </QuioscoContext.Provider>
     );

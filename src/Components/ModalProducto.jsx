@@ -4,7 +4,7 @@ import { formatearDinero } from "../helpers";
 
 export default function ModalProducto() {
     const {producto, handleClickModal, handleAddPedido, pedido, handleActualizarPedido} = useQuiosco();
-    const [cantidad, setCantidad] = useState(1);
+    const [cantidad, setCantidad] = useState(1);    
     const [edicion, setEdicion] = useState(false);
 
   useEffect( () => {
@@ -79,7 +79,7 @@ export default function ModalProducto() {
                 type="button"
                 className={`${edicion ? "bg-lime-500 hover:bg-lime-600" : "bg-indigo-600 hover:bg-indigo-800"} px-5 py-2 mt-5 text-white font-bold uppercase rounded`}
                 onClick={() => {
-                    edicion ? handleActualizarPedido({...producto, cantidad}) : handleAddPedido({...producto, cantidad});
+                    edicion ? handleActualizarPedido({...producto, cantidad,}) : handleAddPedido({...producto, cantidad}), 
                     handleClickModal();
                 }}
             >

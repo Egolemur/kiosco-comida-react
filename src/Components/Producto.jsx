@@ -7,7 +7,7 @@ export default function Producto({producto}) {
 
   
   return (
-    <div className="border p-3 shadow bg-white">
+    <div className="border p-3 shadow bg-white max-w-80">
         <img 
             className="w-full"
             src={`/img/${imagen}.jpg`} 

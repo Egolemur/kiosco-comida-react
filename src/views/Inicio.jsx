@@ -17,7 +17,7 @@ export default function Inicio() {
         Elige y personaliza tu pedido a continuación.
       </p>
       
-      <div className='grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3'>
+      <div className='grid gap-4 grid-cols-1 md:grid-cols-2 xl:grid-cols-3 max-w-screen-lg mx-auto'>
         {productos          
           .map(producto => (
           <Producto
