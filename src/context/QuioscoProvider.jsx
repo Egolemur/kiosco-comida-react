@@ -1,20 +1,36 @@
 import { createContext, useEffect, useState } from 'react'
 import { toast } from 'react-toastify';
-import { categorias as categoriasDB } from "../data/categorias"
+import axios from 'axios';
 
 const QuioscoContext = createContext();
 
 const QuioscoProvider = ({children}) => {
-    const [categorias, setCategorias] = useState(categoriasDB);       
-    const [ categoriaActual, setCategoriaActual ] = useState(categorias[0]);
+    const [categorias, setCategorias] = useState([]);       
+    const [ categoriaActual, setCategoriaActual ] = useState({});
     const [producto, setProducto] = useState({});
     const [modal, setModal] = useState(false);
     const [pedido, setPedido] = useState([]);
     const [total, setTotal] = useState(0);
+
     useEffect(() => {
         const totalPedido = pedido.reduce((acumulador, pedido) => acumulador + (pedido.precio * pedido.cantidad), 0);
         setTotal(totalPedido);
     }, [pedido]);
+
+    // Obtener las categorias de la base de datos por medio de una API utilizando Axios.
+    const obtenerCategorias = async () => {
+        try {
+            const {data} = await axios("http://127.0.0.1/api/categorias");
+            setCategorias(data.data);
+            setCategoriaActual(data.data[0]);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        obtenerCategorias();
+    }, []);
     
     // filtra los productos por categorias.
     const handleClickCategoria = (id) => {        
