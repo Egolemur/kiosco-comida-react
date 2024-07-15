@@ -12,7 +12,8 @@ import Register from './views/Register'
         children: [
             {
                 index: true,
-                element: <Inicio/>
+                element: <Inicio/>,
+                errorElement: <div>Error al cargar los datos</div>
             }
         ]
     },
