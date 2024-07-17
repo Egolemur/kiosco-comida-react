@@ -20,9 +20,10 @@ export default function Register() {
             password_confirmation: passwordConfirmationRef.current.value
         }
         try {
-            const res = await clienteAxios.post('/api/registro', datos)
+            const {data} = await clienteAxios.post('/api/registro', datos)
             // const data = await res.json()
-            console.log(res)
+            console.log(data)            
+            setErrores([])
         } catch (error) {
             setErrores(Object.values(error.response.data.errors));
         }
