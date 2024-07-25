@@ -31,12 +31,30 @@ export const useAuth = ({middleware, url}) => {
         }
     }
 
-    const register = () => {
-
+    const register = async ( datos, setErrores ) => {
+        try {
+            const {data} = await clienteAxios.post('/api/registro', datos)            
+            localStorage.setItem('AUTH_TOKEN', data.token);            
+            setErrores([])
+            await mutate();
+        } catch (error) {
+            setErrores(Object.values(error.response.data.errors));
+        }
     }
 
-    const logout = () => {
-    
+    const logout = async () => {
+        try {
+            await clienteAxios.post('/api/logout', null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            localStorage.removeItem('AUTH_TOKEN');
+            await mutate(undefined);
+        } catch (error) {
+            throw Error(error?.response?.data?.errors)
+        }
+        console.log('logout')
     }
 
     useEffect(() => {
