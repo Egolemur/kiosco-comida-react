@@ -3,9 +3,13 @@ import useQuiosco from "../hooks/useQiosco"
 import Pedido from "./Pedido";
 
 export default function Summary() {
-  const {pedido} = useQuiosco();
-  const total = pedido.reduce((acumulador, pedido) => acumulador + pedido.precio, 0);
+  const {pedido, total, handleSubmitNuevaOrden} = useQuiosco();
+  // const total = pedido.reduce((acumulador, pedido) => acumulador + pedido.precio, 0);
   const comprobarPedido = () => pedido.length === 0;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleSubmitNuevaOrden();
+  }
 
   return (
     <aside className="h-screen overflow-y-scroll p-5 md:w-1/3 lg:w-auto">
@@ -36,7 +40,11 @@ export default function Summary() {
         {formatearDinero(total)}
       </p>
 
-      <form className="w-full">
+      <form 
+        className="w-full"
+        onSubmit={handleSubmit}
+      >
+
         <div className="mt-5">
           {/* Aqui se mostrará el botón de confirmar pedido solo si hay productos en el pedido. En caso contrario se desabilitará el botón. */}          
           <input 

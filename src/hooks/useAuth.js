@@ -7,8 +7,7 @@ export const useAuth = ({middleware, url}) => {
 
     const token = localStorage.getItem('AUTH_TOKEN')
     const navigate = useNavigate();
-
-    const {data: user, error, mutate} = useSWR('/api/user', () =>
+    const fetcher = () =>
         clienteAxios('/api/user', {
             headers: {
                 Authorization: `Bearer ${token}`
@@ -18,7 +17,8 @@ export const useAuth = ({middleware, url}) => {
         .catch(error => {
             throw Error(error?.response?.data?.errors)
         })
-    )
+
+    const {data: user, error, mutate} = useSWR('/api/user', fetcher)
 
     const login = async ( datos, setErrores ) => {
         try {
