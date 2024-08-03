@@ -22,10 +22,9 @@ const customStyles = {
 Modal.setAppElement('#root');
 
 export default function Layout() {
-  const {user, error} = useAuth({middleware: 'auth'});
+  useAuth({middleware: 'auth'});
   const {modal, handleClickModal} = useQuiosco();  
 
-  console.log(user)
   return (
     <>
       <div className='md:flex'>

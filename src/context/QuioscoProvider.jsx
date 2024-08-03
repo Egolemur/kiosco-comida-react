@@ -19,8 +19,13 @@ const QuioscoProvider = ({children}) => {
 
     // Obtener las categorias de la base de datos por medio de una API utilizando Axios.
     const obtenerCategorias = async () => {
-        try {            
-            const {data} = await clienteAxios('/api/categorias');
+        const token = localStorage.getItem('AUTH_TOKEN')
+        try {                        
+            const {data} = await clienteAxios('/api/categorias', {
+                headers: {
+                    'authorization': `Bearer ${token}` 
+                }                    
+            });
             setCategorias(data.data);
             setCategoriaActual(data.data[0]);
         } catch (error) {
@@ -106,6 +111,32 @@ const QuioscoProvider = ({children}) => {
         }
     }
 
+    const handleClickCompletarPedido = async id => {
+        const token = localStorage.getItem('AUTH_TOKEN')
+        try {
+            await clienteAxios.put(`/api/pedidos/${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    
+    const handleClickProductoAgotado = async id => {
+        const token = localStorage.getItem('AUTH_TOKEN')
+        try {
+            await clienteAxios.put(`/api/productos/${id}`, null, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <QuioscoContext.Provider 
             value={{ 
@@ -124,7 +155,9 @@ const QuioscoProvider = ({children}) => {
                 handleEliminarPedido,
                 handleSubmitNuevaOrden,
                 total, 
-                setTotal               
+                setTotal,
+                handleClickCompletarPedido,
+                handleClickProductoAgotado
             }} 
         > {children} </QuioscoContext.Provider>
     );

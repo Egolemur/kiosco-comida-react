@@ -7,8 +7,7 @@ export const useAuth = ({middleware, url}) => {
 
     const token = localStorage.getItem('AUTH_TOKEN')
     const navigate = useNavigate();
-    const fetcher = () =>
-        clienteAxios('/api/user', {
+    const fetcher = () => clienteAxios('/api/user', {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -60,11 +59,19 @@ export const useAuth = ({middleware, url}) => {
     useEffect(() => {
         if(middleware === 'guest' && url && user) {
             navigate(url)
-        } // Este codigo envia al usuario autenticado hacia la pagina de inicio del kiosco
+        } // Este código envia al usuario autenticado hacia la página de inicio del kiosco
 
         if(middleware === 'auth' && error) {
             navigate('/auth/login')
-        } // Este codigo envia al usuario no autenticado hacia la pagina de login
+        } // Este código envia al usuario no autenticado hacia la página de login
+
+        if(middleware === 'guest' && user && user.admin) {
+            navigate('/admin')
+        } // Este código envia al usuario administrador hacia la página de admin
+
+        if(middleware === 'admin' && user && !user.admin) {
+            navigate('/')
+        } // Este código envia al usuario no administrador hacia la página de inicio
     }, [user, error]) 
 
     return {
