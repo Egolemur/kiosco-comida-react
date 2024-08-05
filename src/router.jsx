@@ -7,6 +7,7 @@ import Register from './views/Register'
 import AdminLayout from './layouts/AdminLayout'
 import Ordenes from './views/Ordenes'
 import Productos from './views/Productos'
+import TotalVenta from './views/TotalVenta'
 
  const router = createBrowserRouter([
     {
@@ -45,6 +46,10 @@ import Productos from './views/Productos'
             {
                 path: '/admin/productos',
                 element: <Productos/>
+            },
+            {
+                path: '/admin/total-venta',
+                element: <TotalVenta/>
             }
         ]
     }

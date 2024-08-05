@@ -20,8 +20,7 @@ export default function Inicio() {
   if (isLoading) return <div>Cargando...</div>;
 
   const productos = data.data.filter(producto => producto.categoria_id === categoriaActual.id && producto.disponible === 1) // Aquí estamos filtrando los productos seleccionados con la categoria del menu izquierdo y que estan disponibles
-  console.log(productos)
-
+ 
   return (
     <>
       <h1 className='text-4xl font-black'>
