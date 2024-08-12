@@ -29,6 +29,14 @@ export default function AdminSidebar() {
                 Cerrar Sesión
             </button> 
         </div> 
+        <div className="my-5 px-5">
+            <a
+                className="text-center bg-green-500 w-full p-3 font-bold text-white truncate"
+                href="/"
+            >
+                Kiosco de compras
+            </a> 
+        </div> 
     </aside>
   )
 }

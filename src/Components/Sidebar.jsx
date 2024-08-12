@@ -1,12 +1,25 @@
 import useQuiosco from "../hooks/useQiosco"
 import Categoria from "./Categoria"
 import { useAuth } from "../hooks/useAuth";
+import { FallingLines } from 'react-loader-spinner';
 
 export default function Sidebar() {
     
     const {categorias} = useQuiosco();    
-    const {logout, user} = useAuth({middleware: 'auth'});
+    const {user, loading, logout} = useAuth({middleware: 'auth'});
 
+    if (loading) {
+        return (
+            <div className="flex justify-center items-center">
+                <FallingLines
+                    color="#4fa94d"
+                    width="100"
+                    visible={true}
+                    ariaLabel="falling-circles-loading"
+                />
+            </div>
+        )
+    }
     return (
         <aside className="md:w-72">
             <div className="p-4">
@@ -38,6 +51,17 @@ export default function Sidebar() {
                         Cerrar Sesión
                     </button>
             </div>
+
+            {user.admin === 1 && (
+                <div className="my-5 px-5">
+                    <a                        
+                        className="text-center bg-green-500 w-full p-3 font-bold text-white truncate"
+                        href="/admin"
+                    >
+                    Panel de administración
+                    </a>
+                </div>
+            )}
 
         </aside>
     )
