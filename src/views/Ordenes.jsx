@@ -29,7 +29,8 @@ export default function Ordenes() {
       </p>
 
       <div className='grid grid-cols-2 gap-5'>
-        {data.data.data.map(orden => (
+        {/* la siguiente linea solamente filtra todas las ordenes que tengan estado 0 y las muestra. */}
+        {data.data.data.filter(order => order.estado === 0).map(orden => (
           <div key={orden.id} className='border border-gray-200 p-4 mb-4 bg-white'>
             <p className='text-2xl font-bold text-slate-600'>
               Contenido del pedido:

@@ -17,7 +17,7 @@ export const useAuth = ({middleware, url}) => {
             throw Error(error?.response?.data?.errors)
         })
 
-    const {data: user, error, mutate} = useSWR('/api/user', fetcher)
+    const { data: user, error, isValidating, mutate } = useSWR('/api/user', fetcher)
 
     const login = async ( datos, setErrores ) => {
         try {
@@ -79,6 +79,7 @@ export const useAuth = ({middleware, url}) => {
         register,
         logout,
         user,
+        loading: isValidating,
         error
     }
 }

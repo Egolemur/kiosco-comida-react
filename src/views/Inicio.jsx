@@ -1,11 +1,14 @@
 import useSWR from 'swr';
 import Producto from '../Components/Producto'
 import useQuiosco from '../hooks/useQiosco'
-import clienteAxios from '../config/axios';
+import clienteAxios from '../config/axios'
+import { FallingLines } from 'react-loader-spinner';
+import {useAuth} from '../hooks/useAuth';
 
 export default function Inicio() {
   
   const {categoriaActual} = useQuiosco(); /* Este es el contexto del quiosco */
+  const {loading} = useAuth({middleware: 'auth'});
 
   // Consulta SWR
   const fetcher = () => clienteAxios('/api/productos', {
@@ -13,17 +16,27 @@ export default function Inicio() {
       Authorization: `Bearer ${localStorage.getItem('AUTH_TOKEN')}`
     }
   }).then(res => res.data);
-  const {data, error, isLoading} = useSWR('/api/productos', fetcher, {
+  
+  const {data, isLoading} = useSWR('/api/productos', fetcher, {
     refreshInterval: 1000,
   });
   
-  if (isLoading) return <div>Cargando...</div>;
+  // Si no hay productos, mostrar un mensaje de carga 
+  if (isLoading) return <div>
+    <div className="flex justify-center items-center min-h-screen">
+      <FallingLines
+          color="#4fa94d"
+          width="100"
+          visible={true}
+          ariaLabel="falling-circles-loading"
+          />
+      </div> 
+  </div>;
 
   const productos = data.data.filter(producto => producto.categoria_id === categoriaActual.id && producto.disponible === 1) // Aquí estamos filtrando los productos seleccionados con la categoria del menu izquierdo y que estan disponibles
-  console.log(productos)
-
+ 
   return (
-    <>
+    <> 
       <h1 className='text-4xl font-black'>
         {categoriaActual.nombre}
       </h1>
@@ -41,6 +54,6 @@ export default function Inicio() {
           />
         ))}
       </div>
-    </>
+  </>
   )
 }
